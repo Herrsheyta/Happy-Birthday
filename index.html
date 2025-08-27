@@ -7,13 +7,13 @@
 <style>
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Cursive', Arial, sans-serif;
   overflow: hidden;
   text-align: center;
   height: 100vh;
   position: relative;
-  background: linear-gradient(to bottom, #fce4ec, #ffe0f0);
-  animation: bgGlow 8s ease-in-out infinite alternate;
+  background: linear-gradient(to bottom, #fce4ec, #ffe0f0, #ffd1dc);
+  animation: bgGlow 10s ease-in-out infinite alternate;
 }
 
 /* Stars */
@@ -32,11 +32,12 @@ body {
 .typewriter {
   font-size: 28px;
   font-weight: bold;
-  color: #e91e63;
+  color: #d81b60;
   margin-bottom: 20px;
   min-height: 100px;
   position: relative;
   z-index: 10;
+  text-shadow: 0 0 5px #ff85c0;
 }
 
 /* Password & Note */
@@ -50,7 +51,7 @@ body {
 #noteContainer {
   display:none;
   font-size: 20px;
-  color:#e91e63;
+  color:#d81b60;
   font-weight:bold;
   line-height:1.6;
   max-width: 80%;
@@ -61,6 +62,7 @@ body {
   overflow-y: auto;
   max-height: 60vh;
   text-align: center;
+  text-shadow: 0 0 5px #ff85c0;
 }
 
 input {
@@ -73,15 +75,15 @@ button {
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
-  background: #e91e63;
+  background: #d81b60;
   color: white;
   cursor: pointer;
 }
-button:hover { background: #d81b60; }
+button:hover { background: #c2185b; }
 #error { color:red; display:none; margin-bottom:10px; }
 
 /* Floating items */
-.balloon, .heart, .confetti, .sparkle, .trail, .cakeHeart {
+.balloon, .heart, .confetti, .sparkle, .trail, .petal {
   position: absolute;
   pointer-events: none;
   z-index: 5;
@@ -92,7 +94,7 @@ button:hover { background: #d81b60; }
 .balloon { border-radius: 50% 50% 50% 50%; width: 50px; height: 70px; opacity: 0.9; }
 
 /* Hearts */
-.heart, .cakeHeart {
+.heart {
   width: 25px;
   height: 25px;
   background: red;
@@ -101,7 +103,7 @@ button:hover { background: #d81b60; }
   animation: pulse 2s infinite;
   box-shadow: 0 0 8px rgba(255,0,0,0.7);
 }
-.heart::before, .heart::after, .cakeHeart::before, .cakeHeart::after {
+.heart::before, .heart::after {
   content: "";
   position: absolute;
   width: 25px;
@@ -109,56 +111,41 @@ button:hover { background: #d81b60; }
   background: red;
   border-radius: 50%;
 }
-.heart::before, .cakeHeart::before { top: -12.5px; left: 0; }
-.heart::after, .cakeHeart::after { left: 12.5px; top: 0; }
+.heart::before { top: -12.5px; left: 0; }
+.heart::after { left: 12.5px; top: 0; }
 
 /* Confetti & Sparkles */
 .confetti { width: 8px; height: 8px; border-radius: 50%; opacity: 0.9; }
 .sparkle, .trail { width: 6px; height: 6px; border-radius: 50%; background: gold; animation: sparkleAnim 1s ease-out forwards; }
 
-/* Cake */
-#cake {
-  display:none;
-  margin:30px auto 0 auto;
-  width:140px;
-  height:180px;
-  position: relative;
+/* Rose Petals */
+.petal {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle at 50% 50%, #ff4d6d, #d81b60);
+  border-radius: 50% 50% 50% 50%;
+  opacity: 0.8;
+  transform: rotate(0deg);
 }
-#cake .layer {
-  width: 100%;
-  height: 40px;
-  background: pink;
-  border-radius: 10px 10px 0 0;
-  margin-bottom: 4px;
-  position: relative;
-}
-#cake .frosting {
-  width: 100%;
-  height: 10px;
-  background: #fff;
+
+/* Banner */
+#bannerContainer {
   position: absolute;
-  top:-10px;
-  border-radius:10px 10px 0 0;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  pointer-events: none;
+  display: none;
 }
-#cake .candle {
-  width: 6px;
-  height: 25px;
-  background: yellow;
-  position: absolute;
-  top:-35px;
-  left:50%;
-  transform:translateX(-50%);
-  border-radius:3px;
-}
-#cake .flame {
-  width: 8px;
-  height: 12px;
-  background: orange;
-  position: absolute;
-  top:-12px;
-  left:-1px;
-  border-radius:50%;
-  animation: flicker 0.3s infinite alternate;
+
+#birthdayBanner {
+  font-size: 50px;
+  font-weight: bold;
+  color: #ff1e8c;
+  text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff85c0, 0 0 30px #ff2d95;
+  animation: floatBanner 3s ease-in-out infinite alternate, glowText 2s ease-in-out infinite alternate;
 }
 
 /* Animations */
@@ -170,13 +157,19 @@ button:hover { background: #d81b60; }
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 @keyframes twinkle { 0% { opacity: 0.2; } 50% { opacity: 0.8; } 100% { opacity: 0.2; } }
 @keyframes bgGlow {
-  0% { background: linear-gradient(to bottom, #fce4ec, #ffe0f0); }
-  50% { background: linear-gradient(to bottom, #ffe0f0, #fce4ec); }
-  100% { background: linear-gradient(to bottom, #fce4ec, #ffe0f0); }
+  0% { background: linear-gradient(to bottom, #fce4ec, #ffe0f0, #ffd1dc); }
+  50% { background: linear-gradient(to bottom, #ffd1dc, #ffe0f0, #fce4ec); }
+  100% { background: linear-gradient(to bottom, #fce4ec, #ffe0f0, #ffd1dc); }
 }
-@keyframes flicker {
-  0% { transform: translateX(-50%) scaleY(1); opacity:1; }
-  100% { transform: translateX(-50%) scaleY(1.2); opacity:0.8; }
+@keyframes floatBanner {
+  0% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-15px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+@keyframes glowText {
+  0% { text-shadow: 0 0 10px #ff2d95, 0 0 20px #ff85c0, 0 0 30px #ff2d95; }
+  50% { text-shadow: 0 0 20px #ff2d95, 0 0 40px #ff85c0, 0 0 60px #ff2d95; }
+  100% { text-shadow: 0 0 10px #ff2d95, 0 0 20px #ff85c0, 0 0 30px #ff2d95; }
 }
 </style>
 </head>
@@ -195,11 +188,8 @@ button:hover { background: #d81b60; }
 
 <div id="noteContainer"></div>
 
-<div id="cake">
-  <div class="layer"><div class="frosting"></div></div>
-  <div class="layer"><div class="frosting"></div></div>
-  <div class="layer"><div class="frosting"></div></div>
-  <div class="candle"><div class="flame"></div></div>
+<div id="bannerContainer">
+  <h1 id="birthdayBanner">🎉Happy Birthday, My Love!💖🎉</h1>
 </div>
 
 <script>
@@ -294,6 +284,7 @@ function checkPassword(){
     document.getElementById("typewriter").style.display="none";
     partyPopper();
     showNoteLineByLine();
+    startPetals(); // Start rose petals
   } else {
     document.getElementById("error").style.display="block";
     document.getElementById("retryBtn").style.display="inline-block";
@@ -307,7 +298,7 @@ function retry(){
 
 // Show note line by line
 const noteLines = [
-"I don’t know if three words could ever truly capture how I feel about you… so maybe four words do it a little better: You are my universe 🌌✨. The dictionary says the universe is all of space, time, and their contents. In other words—the universe is everything. You are my everything 💖.",
+"I don’t know if three words could ever truly capture how I feel about you… So, maybe four words do it a little better: You are my universe 🌌✨. The dictionary says the universe is all of space, time, and their contents. In other words—the universe is everything. You are my everything 💖.",
 "When you look up at the stars ✨, can you imagine their end? I imagine constellation after constellation, galaxy after galaxy 🌠—I cannot picture the sky ever coming to a point where the stars cease to exist. My love for you is the same ❤️. It continues on, endlessly ♾️.",
 "Even the brightest stars fall from the sky 🌟; some explode 💥, some burn out 🔥. But amidst all of our explosions, shortcomings, and falling outs, I will still love you 💌—because out of all the things that fail in this life, love never does.",
 "YOU ARE MY UNIVERSE 🌌. And even those four words cannot unravel the depths of my love for you 💕.",
@@ -316,8 +307,8 @@ const noteLines = [
 function showNoteLineByLine(idx=0){
   const container=document.getElementById('noteContainer');
   if(idx>=noteLines.length){
-    document.getElementById('cake').style.display='block';
-    animateCakeHearts();
+    document.getElementById('bannerContainer').style.display='block';
+    createSparklesAroundBanner();
     return;
   }
   const p=document.createElement('p');
@@ -327,24 +318,47 @@ function showNoteLineByLine(idx=0){
   setTimeout(()=>showNoteLineByLine(idx+1),2000);
 }
 
-// Hearts rising from cake flame
-function animateCakeHearts(){
+// Sparkles around banner
+function createSparklesAroundBanner(){
   setInterval(()=>{
-    const heart=document.createElement('div');
-    heart.className='cakeHeart';
-    const cakeRect=document.getElementById('cake').getBoundingClientRect();
-    heart.style.left = cakeRect.left + cakeRect.width/2 - 12 + 'px';
-    heart.style.top = cakeRect.top - 20 + 'px';
-    document.body.appendChild(heart);
-    let top=parseFloat(heart.style.top);
+    const sparkle=document.createElement('div');
+    sparkle.className='sparkle';
+    const bannerRect=document.getElementById('birthdayBanner').getBoundingClientRect();
+    sparkle.style.left = bannerRect.left + Math.random()*bannerRect.width + 'px';
+    sparkle.style.top = bannerRect.top + Math.random()*bannerRect.height + 'px';
+    document.body.appendChild(sparkle);
+    let scale=0;
     const anim=setInterval(()=>{
-      top-=1;
-      heart.style.top=top+'px';
-      heart.style.left=parseFloat(heart.style.left)+Math.sin(Date.now()/200)*0.5+'px';
-      if(top<0){ heart.remove(); clearInterval(anim); }
+      scale += 0.05;
+      sparkle.style.transform = `scale(${scale})`;
+      sparkle.style.opacity = 1 - scale/2;
+      if(scale>=2){ sparkle.remove(); clearInterval(anim); }
+    },20);
+  },200);
+}
+
+// Rose Petals
+function startPetals(){
+  setInterval(()=>{
+    const petal=document.createElement('div');
+    petal.className='petal';
+    petal.style.left = Math.random()*100 + 'vw';
+    petal.style.top = '-20px';
+    document.body.appendChild(petal);
+    let top=-20;
+    const angle=Math.random()*2*Math.PI;
+    const speed=1+Math.random()*2;
+    const rotateSpeed=(Math.random()-0.5)*0.1;
+    const anim=setInterval(()=>{
+      top += speed;
+      petal.style.top = top+'px';
+      petal.style.left = parseFloat(petal.style.left)+Math.sin(Date.now()/500)*0.3+'vw';
+      petal.style.transform = `rotate(${rotateSpeed*top*50}deg)`;
+      if(top>window.innerHeight+20){ petal.remove(); clearInterval(anim);}
     },20);
   },300);
 }
 </script>
 </body>
 </html>
+
