@@ -1,478 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Surprise For You 💕</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Surprise For You 💕</title>
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {font-family:'Georgia',serif;overflow-x:hidden;min-height:100vh;}
 
-        body {
-            font-family: 'Georgia', serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    /* Page 1 */
+    #page1 {
+      min-height:100vh;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      position:relative;
+      display:flex;justify-content:center;align-items:center;
+      animation:gradientShift 8s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%,100%{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);}
+      50%{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);}
+    }
+    .container {
+      text-align:center;z-index:10;background:rgba(255,255,255,0.95);
+      padding:40px;border-radius:30px;box-shadow:0 20px 60px rgba(0,0,0,0.3);
+      max-width:500px;margin:20px;animation:floatContainer 3s ease-in-out infinite;
+    }
+    @keyframes floatContainer {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+    h1 {color:#764ba2;font-size:2em;margin-bottom:20px;text-shadow:2px 2px 4px rgba(0,0,0,0.1);}
+    .wish-message{font-size:1.1em;color:#555;margin-bottom:20px;line-height:1.6;}
+    
+    /* Game hearts */
+    .game-area {margin:20px auto;position:relative;width:250px;height:200px;border:2px dashed #764ba2;border-radius:15px;overflow:hidden;}
+    .game-heart {
+      position:absolute;width:30px;height:30px;background:red;
+      transform:rotate(45deg);cursor:pointer;animation:floatHeart 5s linear infinite;
+    }
+    .game-heart::before,.game-heart::after {
+      content:'';position:absolute;width:30px;height:30px;border-radius:50%;background:red;
+    }
+    .game-heart::before{left:-15px;top:0;}
+    .game-heart::after{left:0;top:-15px;}
+    @keyframes floatHeart {
+      0%{top:100%;opacity:0;}
+      20%{opacity:1;}
+      100%{top:-40px;opacity:0;}
+    }
+    .submit-btn {
+      margin-top:20px;padding:12px 40px;font-size:1.1em;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:#fff;border:none;border-radius:25px;cursor:pointer;
+      transition:transform 0.3s,box-shadow 0.3s;
+    }
+    .submit-btn:disabled {background:gray;cursor:not-allowed;}
+    .submit-btn:hover:enabled {transform:scale(1.05);box-shadow:0 10px 20px rgba(118,75,162,0.4);}
+    .error-message{color:#FF1744;margin-top:10px;font-size:0.9em;display:none;}
 
-        /* Page 1 Styles */
-        #page1 {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: gradientShift 8s ease infinite;
-        }
+    /* Page 2 */
+    #page2 {
+      min-height:100vh;
+      background:linear-gradient(135deg,#FA8BFF 0%,#2BD2FF 52%,#2BFF88 90%);
+      display:none;position:relative;padding:40px 20px;
+      animation:celebrateGradient 5s ease infinite;
+    }
+    @keyframes celebrateGradient {
+      0%,100%{background:linear-gradient(135deg,#FA8BFF 0%,#2BD2FF 52%,#2BFF88 90%);}
+      50%{background:linear-gradient(135deg,#FFD26F 0%,#3677FF 52%,#FF6FD8 90%);}
+    }
+    .birthday-container {max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:10;}
+    .birthday-message {
+      background:rgba(255,255,255,0.95);padding:40px;border-radius:30px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.2);margin-bottom:30px;animation:slideIn 1s ease-out;
+    }
+    @keyframes slideIn {from{transform:translateY(-50px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+    .birthday-message h2 {color:#FF1744;font-size:2.2em;margin-bottom:20px;text-shadow:3px 3px 6px rgba(0,0,0,0.1);}
+    .birthday-message p {font-size:1.2em;color:#333;line-height:1.8;}
+    
+    /* Cake */
+    .cake{width:200px;height:150px;margin:30px auto;position:relative;}
+    .cake-base{width:200px;height:100px;background:linear-gradient(to bottom,#8B4513,#D2691E);border-radius:10px;position:absolute;bottom:0;}
+    .cake-layer{width:200px;height:30px;background:linear-gradient(to right,#FFB6C1,#FFC0CB);position:absolute;bottom:40px;border-radius:50%;}
+    .candle{width:10px;height:40px;background:#FFD700;position:absolute;top:10px;left:50%;transform:translateX(-50%);}
+    .flame{
+      width:20px;height:20px;background:radial-gradient(circle,#FFA500,#FF4500);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      position:absolute;top:-15px;left:-5px;
+      animation:flicker 0.2s infinite alternate;
+      box-shadow:0 0 20px 5px rgba(255,165,0,0.6);
+    }
+    @keyframes flicker {
+      0%{transform:scale(1) rotate(-2deg);opacity:0.9;}
+      100%{transform:scale(1.2) rotate(2deg);opacity:1;}
+    }
+    .birthday-banner {
+      background:linear-gradient(135deg,#FF6B6B,#4ECDC4);
+      color:#fff;padding:20px 40px;font-size:2.5em;font-weight:bold;
+      border-radius:20px;display:inline-block;margin-top:30px;
+      text-shadow:3px 3px 6px rgba(0,0,0,0.3);animation:pulse 2s infinite;
+    }
+    @keyframes pulse {0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
 
-        @keyframes gradientShift {
-            0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-            50% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        }
-
-        .container {
-            text-align: center;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 50px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
-            margin: 20px;
-            animation: floatContainer 3s ease-in-out infinite;
-        }
-
-        @keyframes floatContainer {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            color: #764ba2;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .wish-message {
-            font-size: 1.2em;
-            color: #555;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .date-form {
-            margin-top: 30px;
-        }
-
-        .date-form label {
-            display: block;
-            font-size: 1.1em;
-            color: #764ba2;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .date-form input {
-            padding: 12px 20px;
-            font-size: 1em;
-            border: 2px solid #f093fb;
-            border-radius: 25px;
-            width: 100%;
-            max-width: 300px;
-            transition: all 0.3s;
-        }
-
-        .date-form input:focus {
-            outline: none;
-            border-color: #764ba2;
-            box-shadow: 0 0 10px rgba(118, 75, 162, 0.3);
-        }
-
-        .submit-btn {
-            margin-top: 20px;
-            padding: 12px 40px;
-            font-size: 1.1em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .submit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.4);
-        }
-
-        /* Floating Elements */
-        .balloon {
-            position: absolute;
-            width: 80px;
-            height: 100px;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            opacity: 0.8;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .balloon::after {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 100px;
-            background: rgba(0,0,0,0.2);
-            left: 50%;
-            bottom: -100px;
-            transform: translateX(-50%);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(-20deg); }
-            100% { transform: translateY(-100vh) rotate(20deg); }
-        }
-
-        .heart {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            transform: rotate(45deg);
-            animation: floatHeart 10s infinite ease-in-out;
-            opacity: 0.7;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-
-        .heart::before {
-            left: -15px;
-            top: 0;
-        }
-
-        .heart::after {
-            left: 0;
-            top: -15px;
-        }
-
-        @keyframes floatHeart {
-            0% { transform: translateY(100vh) rotate(45deg) scale(0); }
-            10% { transform: translateY(80vh) rotate(45deg) scale(1); }
-            100% { transform: translateY(-100vh) rotate(45deg) scale(0); }
-        }
-
-        /* Page 2 Styles */
-        #page2 {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
-            display: none;
-            position: relative;
-            padding: 40px 20px;
-            animation: celebrateGradient 5s ease infinite;
-        }
-
-        @keyframes celebrateGradient {
-            0%, 100% { background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%); }
-            50% { background: linear-gradient(135deg, #FFD26F 0%, #3677FF 52%, #FF6FD8 90%); }
-        }
-
-        .birthday-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .birthday-message {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-            animation: slideIn 1s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .birthday-message h2 {
-            color: #FF1744;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
-        }
-
-        .birthday-message p {
-            font-size: 1.3em;
-            color: #333;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .cake {
-            width: 200px;
-            height: 150px;
-            margin: 30px auto;
-            position: relative;
-            animation: cakeBounce 2s ease-in-out infinite;
-        }
-
-        @keyframes cakeBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .cake-base {
-            width: 200px;
-            height: 100px;
-            background: linear-gradient(to bottom, #8B4513, #D2691E);
-            border-radius: 10px;
-            position: absolute;
-            bottom: 0;
-        }
-
-        .cake-layer {
-            width: 200px;
-            height: 30px;
-            background: linear-gradient(to right, #FFB6C1, #FFC0CB);
-            position: absolute;
-            bottom: 40px;
-            border-radius: 50%;
-        }
-
-        .candle {
-            width: 10px;
-            height: 40px;
-            background: #FFD700;
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .flame {
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, #FFA500, #FF4500);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            position: absolute;
-            top: -15px;
-            left: -5px;
-            animation: flicker 0.5s infinite alternate;
-        }
-
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-2deg); }
-            100% { transform: scale(1.1) rotate(2deg); }
-        }
-
-        .birthday-banner {
-            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
-            color: white;
-            padding: 20px 40px;
-            font-size: 3em;
-            font-weight: bold;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 30px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #FFD700;
-            animation: confettiFall 3s infinite linear;
-        }
-
-        @keyframes confettiFall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-
-        .error-message {
-            color: #FF1744;
-            margin-top: 10px;
-            font-size: 0.9em;
-            display: none;
-        }
-    </style>
+    /* Floating hearts effect */
+    .pop-heart{
+      position:fixed;width:20px;height:20px;background:red;transform:rotate(45deg);
+      animation:rise 3s linear forwards;z-index:9999;
+    }
+    .pop-heart::before,.pop-heart::after{content:'';position:absolute;width:20px;height:20px;background:red;border-radius:50%;}
+    .pop-heart::before{left:-10px;top:0;}
+    .pop-heart::after{left:0;top:-10px;}
+    @keyframes rise {
+      0%{opacity:1;transform:translateY(0) scale(1) rotate(45deg);}
+      100%{opacity:0;transform:translateY(-200px) scale(1.5) rotate(45deg);}
+    }
+  </style>
 </head>
 <body>
-    <!-- Page 1: Password Entry -->
-    <div id="page1">
-        <!-- Floating Balloons -->
-        <div class="balloon" style="left: 10%; background: linear-gradient(135deg, #FF6B6B, #FF8E8E); animation-delay: 0s;"></div>
-        <div class="balloon" style="left: 30%; background: linear-gradient(135deg, #4ECDC4, #6EE7DF); animation-delay: 3s;"></div>
-        <div class="balloon" style="left: 50%; background: linear-gradient(135deg, #FFD93D, #FFE66D); animation-delay: 6s;"></div>
-        <div class="balloon" style="left: 70%; background: linear-gradient(135deg, #A8E6CF, #C8F7DC); animation-delay: 9s;"></div>
-        <div class="balloon" style="left: 90%; background: linear-gradient(135deg, #C7CEEA, #E2E5F5); animation-delay: 12s;"></div>
-
-        <!-- Floating Hearts -->
-        <div class="heart" style="left: 15%; background: #FF1744; animation-delay: 1s;"></div>
-        <div class="heart" style="left: 25%; background: #FF4569; animation-delay: 4s;"></div>
-        <div class="heart" style="left: 45%; background: #FF6B9D; animation-delay: 7s;"></div>
-        <div class="heart" style="left: 65%; background: #FF1744; animation-delay: 10s;"></div>
-        <div class="heart" style="left: 85%; background: #FF4569; animation-delay: 13s;"></div>
-
-        <div class="container">
-            <h1>🎉 Someone Special Has a Surprise! 🎉</h1>
-            <div class="wish-message">
-                <p>Today is a magical day because it marks another year of your beautiful existence in this world.</p>
-                <p>Before revealing your special surprise, I have a question that only you would know the answer to...</p>
-            </div>
-            
-            <form class="date-form" onsubmit="checkPassword(event)">
-                <label for="dateInput">💕 When was our first date? 💕</label>
-                <input type="text" id="dateInput" placeholder="Enter the date..." required>
-                <div class="error-message" id="errorMsg">Huhh? How can you even forget this???</div>
-                <br>
-                <button type="submit" class="submit-btn">Unlock My Surprise 🎁</button>
-            </form>
-        </div>
+  <!-- Page 1 -->
+  <div id="page1">
+    <div class="container">
+      <h1>🎉 Someone Special Has a Surprise! 🎉</h1>
+      <div class="wish-message">
+        <p>Catch 3 hearts 💕 to unlock your surprise!</p>
+      </div>
+      <div class="game-area" id="gameArea"></div>
+      <form onsubmit="checkPassword(event)">
+        <input type="password" id="dateInput" placeholder="Enter our date..." required style="margin-top:15px;padding:10px;border-radius:10px;border:2px solid #764ba2;">
+        <div class="error-message" id="errorMsg">Huhh? How can you even forget this???</div>
+        <br>
+        <button type="submit" class="submit-btn" id="unlockBtn" disabled>Unlock My Surprise 🎁</button>
+      </form>
     </div>
+  </div>
 
-    <!-- Page 2: Birthday Message -->
-    <div id="page2">
-        <!-- Confetti -->
-        <div class="confetti" style="left: 10%; background: #FF6B6B; animation-delay: 0s;"></div>
-        <div class="confetti" style="left: 20%; background: #4ECDC4; animation-delay: 0.5s;"></div>
-        <div class="confetti" style="left: 30%; background: #FFD93D; animation-delay: 1s;"></div>
-        <div class="confetti" style="left: 40%; background: #A8E6CF; animation-delay: 1.5s;"></div>
-        <div class="confetti" style="left: 50%; background: #C7CEEA; animation-delay: 2s;"></div>
-        <div class="confetti" style="left: 60%; background: #FF6B6B; animation-delay: 2.5s;"></div>
-        <div class="confetti" style="left: 70%; background: #4ECDC4; animation-delay: 3s;"></div>
-        <div class="confetti" style="left: 80%; background: #FFD93D; animation-delay: 3.5s;"></div>
-        <div class="confetti" style="left: 90%; background: #A8E6CF; animation-delay: 4s;"></div>
-
-        <div class="birthday-container">
-            <div class="birthday-message">
-                <h2>🎂 Happy Birthday, My Love! 🎂</h2>
-                <p>I don’t know if three words could ever truly capture how I feel about you… So, maybe four words do it a little better: You are my universe 🌌✨. The dictionary says the universe is all of space, time, and their contents. In other words—the universe is everything. You are my everything 💖. When you look up at the stars ✨, can you imagine their end? I imagine constellation after constellation, galaxy after galaxy 🌠I cannot picture the sky ever coming to a point where the stars cease to exist. My love for you is the same ❤️. It continues on, endlessly ♾️. Even the brightest stars fall from the sky 🌟; some explode 💥, some burn out 🔥. But amidst all of our explosions, shortcomings, and falling outs, I will still love you 💌because out of all the things that fail in this life, love never does. YOU ARE MY UNIVERSE 🌌. And even those four words cannot unravel the depths of my love for you 💕.So today, on your birthday 🎂🎉, I just want to say: Thank you for being my universe, for filling my life with light, laughter 😄, and love ❤️. I can’t wait to celebrate you, hold you close 🤗, steal a few kisses 😘, and make you feel just how much you mean to me. Happy Birthday, my love 💖!</p>
-                <p style="font-size: 1.5em; color: #FF1744; font-weight: bold;">I love you to the moon and back! 🌙✨</p>
-            </div>
-
-            <div class="cake">
-                <div class="cake-base"></div>
-                <div class="cake-layer"></div>
-                <div class="candle">
-                    <div class="flame"></div>
-                </div>
-            </div>
-
-            <div class="birthday-banner">
-                🎊 HAPPY BIRTHDAY! 🎊
-            </div>
-        </div>
+  <!-- Page 2 -->
+  <div id="page2">
+    <div class="birthday-container">
+      <div class="birthday-message">
+        <h2>🎂 Happy Birthday, My Love! 🎂</h2>
+        <p id="typedMessage"></p>
+        <p style="font-size:1.4em;color:#FF1744;font-weight:bold;margin-top:20px;">I love you to the moon and back! 🌙✨</p>
+      </div>
+      <div class="cake">
+        <div class="cake-base"></div>
+        <div class="cake-layer"></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+      <div class="birthday-banner">🎊 HAPPY BIRTHDAY! 🎊</div>
     </div>
+  </div>
 
-    <script>
-        // Store your first date here (change this to your actual first date)
-        // You can use various formats like "01/15/2023", "January 15 2023", "15-01-2023", etc.
-        const correctDates = ["01-02-2025", "Feb 01 2025"]; // Add your date(s) here
+<script>
+const correctDates=["01-02-2025","Feb012025"];
+let heartsCaught=0;
 
-        function checkPassword(event) {
-            event.preventDefault();
-            
-            const input = document.getElementById('dateInput').value.toLowerCase().trim();
-            const errorMsg = document.getElementById('errorMsg');
-            
-            // Check if the input matches any of the correct date formats
-            const isCorrect = correctDates.some(date => 
-                input === date.toLowerCase() || 
-                input.replace(/[\s-/]/g, '') === date.toLowerCase().replace(/[\s-/]/g, '')
-            );
-            
-            if (isCorrect || input === "test") { // "test" is for testing purposes, remove in final version
-                // Correct password - show page 2
-                document.getElementById('page1').style.display = 'none';
-                document.getElementById('page2').style.display = 'block';
-                
-                // Create more confetti for celebration
-                createConfetti();
-            } else {
-                // Wrong password - show error
-                errorMsg.style.display = 'block';
-                document.getElementById('dateInput').value = '';
-                
-                // Hide error after 3 seconds
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 3000);
-            }
-        }
+// Game: generate hearts
+function spawnHeart(){
+  const heart=document.createElement("div");
+  heart.className="game-heart";
+  heart.style.left=Math.random()*220+"px";
+  heart.style.top="180px";
+  document.getElementById("gameArea").appendChild(heart);
+  heart.addEventListener("click",()=>{
+    heartsCaught++;
+    heart.remove();
+    if(heartsCaught>=3){
+      document.getElementById("unlockBtn").disabled=false;
+    }
+  });
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(spawnHeart,1500);
 
-        function createConfetti() {
-            const colors = ['#FF6B6B', '#4ECDC4', '#FFD93D', '#A8E6CF', '#C7CEEA', '#FF1744', '#00BCD4', '#8BC34A'];
-            
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 3 + 's';
-                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                    document.getElementById('page2').appendChild(confetti);
-                    
-                    // Remove confetti after animation
-                    setTimeout(() => confetti.remove(), 5000);
-                }, i * 100);
-            }
-        }
+// Unlock
+function checkPassword(e){
+  e.preventDefault();
+  const input=document.getElementById("dateInput").value.toLowerCase().trim();
+  const errorMsg=document.getElementById("errorMsg");
+  const isCorrect=correctDates.some(d=>input.replace(/[\s-/]/g,"")===d.toLowerCase().replace(/[\s-/]/g,""));
+  if(isCorrect){
+    document.getElementById("page1").style.display="none";
+    document.getElementById("page2").style.display="block";
+    typeMessage();
+    popHearts();
+  }else{
+    errorMsg.style.display="block";
+    setTimeout(()=>errorMsg.style.display="none",3000);
+  }
+}
 
-        // Add sparkles on mouse move for extra magic
-        document.addEventListener('mousemove', (e) => {
-            if (Math.random() > 0.95) { // Only create sparkles occasionally
-                const sparkle = document.createElement('div');
-                sparkle.style.position = 'fixed';
-                sparkle.style.left = e.clientX + 'px';
-                sparkle.style.top = e.clientY + 'px';
-                sparkle.style.width = '4px';
-                sparkle.style.height = '4px';
-                sparkle.style.background = '#FFD700';
-                sparkle.style.borderRadius = '50%';
-                sparkle.style.pointerEvents = 'none';
-                sparkle.style.animation = 'sparkle 1s ease-out forwards';
-                document.body.appendChild(sparkle);
-                
-                setTimeout(() => sparkle.remove(), 1000);
-            }
-        });
+// Typing effect
+const message=`I don’t know if three words could ever truly capture how I feel about you… So, maybe four words do it a little better: You are my universe 🌌✨. The dictionary says the universe is all of space, time, and their contents. In other words—the universe is everything. You are my everything 💖. When you look up at the stars ✨, can you imagine their end? I imagine constellation after constellation, galaxy after galaxy 🌠 I cannot picture the sky ever coming to a point where the stars cease to exist. My love for you is the same ❤️. It continues on, endlessly ♾️. Even the brightest stars fall from the sky 🌟; some explode 💥, some burn out 🔥. But amidst all of our explosions, shortcomings, and falling outs, I will still love you 💌 because out of all the things that fail in this life, love never does. YOU ARE MY UNIVERSE 🌌. And even those four words cannot unravel the depths of my love for you 💕. So today, on your birthday 🎂🎉, I just want to say: Thank you for being my universe, for filling my life with light, laughter 😄, and love ❤️. I can’t wait to celebrate you, hold you close 🤗, steal a few kisses 😘, and make you feel just how much you mean to me. Happy Birthday, my love 💖!`;
+let i=0;
+function typeMessage(){
+  if(i<message.length){
+    document.getElementById("typedMessage").innerHTML+=message.charAt(i);
+    i++;setTimeout(typeMessage,40);
+  }
+}
 
-        // Add sparkle animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes sparkle {
-                0% { transform: translate(0, 0) scale(1); opacity: 1; }
-                100% { transform: translate(0, -30px) scale(0); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+// Popping hearts effect
+function popHearts(){
+  setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="pop-heart";
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.top=window.innerHeight+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),3000);
+  },500);
+}
+</script>
 </body>
 </html>
+
